@@ -1,30 +1,21 @@
 <template>
-  <div id="nav">
-    <router-link to="/">Home</router-link> |
-    <router-link to="/about">About</router-link>
+  <div class="app">
+    <div id="nav">
+      <div class="columns is-vcentered has-background-grey-light mb-5">
+        <router-link class="column is-size-3 is-10 p-4" to="/">Sample</router-link>
+        <div class="column is-size-7">新規登録</div>
+        <div class="column is-size-7">ログイン</div>
+      </div>
+    </div>
+    <router-view v-slot="{ Component }">
+      <transition name="fade" mode="out-in">
+        <component :is="Component"/>
+      </transition>
+    </router-view>
   </div>
-  <router-view/>
 </template>
+<script>
+export default {
 
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
 }
-
-#nav {
-  padding: 30px;
-}
-
-#nav a {
-  font-weight: bold;
-  color: #2c3e50;
-}
-
-#nav a.router-link-exact-active {
-  color: #42b983;
-}
-</style>
+</script>
