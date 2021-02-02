@@ -1,7 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import Top from '@/components/Top.vue'
-import Second from '@/views/Second.vue'
-import Third from '@/views/Third.vue'
+import Second from '@/components/Second.vue'
+import Third from '@/components/Third.vue'
 
 const routes = [
   {

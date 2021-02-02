@@ -20,13 +20,13 @@
             </select>
           </div>
           <div class="select">
-            <select v-model="month">
-              <option v-for="m in 12" :key="m">{{ `${m}月` }}</option>
+            <select v-model="month" @change="getDate()">
+              <option v-for="m in 12" :key="m" :value="m">{{ `${m}月` }}</option>
             </select>
           </div>
           <div class="select mb-4">
             <select v-model="date">
-              <option v-for="d in 31" :key="d">{{ `${d}日` }}</option>
+              <option v-for="date in dateMax" :key="date" :value="date">{{ `${date}日` }}</option>
             </select>
            </div>
         </article>
@@ -38,36 +38,36 @@
   </div>
 </template>
 <script>
+import { generate } from '@/helpers/definition.js'
+
 export default {
   name: 'Top',
   data () {
     return {
       myGender: null,
-      year: 2000,
+      year: '2000年 (平成12年)',
       month: 1,
       date: 1,
-      myBirthYears: []
+      myBirthYears: [],
+      dateMax: ''
     }
-  },
-  mounted () {
-    this.myBirthYears = this.genereate()
   },
   methods: {
-    genereate () {
-      const allBirthYears = []
-      for (let y = 2020; y > 1921; y--) {
-        if (y > 2018) {
-          allBirthYears.push({ year: y, label: `${y}年 (令和${y - 2018}年)` })
-        } else if (y > 1988) {
-          allBirthYears.push({ year: y, label: `${y}年 (平成${y - 1988}年)` })
-        } else if (y > 1925) {
-          allBirthYears.push({ year: y, label: `${y}年 (昭和${y - 1925}年)` })
-        } else if (y > 1911) {
-          allBirthYears.push({ year: y, label: `${y}年 (大正${y - 1911}年)` })
-        }
+    getDate: function () {
+      if (this.month === 1 || this.month === 3 || this.month === 5 || this.month === 7 || this.month === 8 || this.month === 10 || this.month === 12) {
+        this.dateMax = 31
+      } else if (this.month === 2) {
+        this.dateMax = 28
+      } else {
+        this.dateMax = 30
       }
-      return allBirthYears
     }
+  },
+  created () {
+    this.getDate()
+  },
+  mounted () {
+    this.myBirthYears = generate()
   }
 }
 </script>
