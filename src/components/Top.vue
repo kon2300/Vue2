@@ -7,25 +7,25 @@
           <div class="column"><p class="has-text-info">-性別-</p></div>
           <div class="column">
             <label>
-              <input type="radio" v-model="myGender" value="男性"/>男性
+              <input type="radio" v-model="$store.state.myGender" value="男性"/>男性
             </label>
             <label>
-              <input type="radio" v-model="myGender" value="女性"/>女性
+              <input type="radio" v-model="$store.state.myGender" value="女性"/>女性
             </label>
           </div>
           <div class="column"><p class="has-text-info">-生年月日-</p></div>
           <div class="select">
-            <select v-model="year">
+            <select v-model="$store.state.year">
               <option v-for="myBirthYear in myBirthYears" :key="myBirthYear.year" :value="myBirthYear.label">{{ myBirthYear.label }}</option>
             </select>
           </div>
           <div class="select">
-            <select v-model="month" @change="getDate()">
+            <select v-model="$store.state.month" @change="getDate()">
               <option v-for="m in 12" :key="m" :value="m">{{ `${m}月` }}</option>
             </select>
           </div>
           <div class="select mb-4">
-            <select v-model="date">
+            <select v-model="$store.state.date">
               <option v-for="date in dateMax" :key="date" :value="date">{{ `${date}日` }}</option>
             </select>
            </div>
@@ -39,18 +39,19 @@
 </template>
 <script>
 import { generate } from '@/helpers/definition.js'
-
+import { mapState } from 'vuex'
 export default {
   name: 'Top',
   data () {
     return {
-      myGender: null,
-      year: '2000年 (平成12年)',
-      month: 1,
-      date: 1,
       myBirthYears: [],
-      dateMax: ''
+      dateMax: null
     }
+  },
+  computed: {
+    ...mapState([
+      'month'
+    ])
   },
   methods: {
     getDate: function () {

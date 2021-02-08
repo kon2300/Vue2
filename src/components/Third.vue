@@ -7,13 +7,13 @@
           <transition name="bounce" appear>
             <div class="column pb-0"><p class="has-text-info">-ご相談内容-</p></div>
           </transition>
-          <div class="colmun has-text-centered p-4"><textarea class="textarea is-large is-info"></textarea></div>
+          <div class="colmun has-text-centered p-4"><textarea v-model="$store.state.ConsultationContent" class="textarea is-large is-info"></textarea></div>
         </article>
       </div>
     </div>
     <div class="has-text-centered">
       <span class="m-6"><router-link  class="button is-primary" to="second">前に戻る</router-link></span>
-      <span class="m-6"><router-link  class="button is-primary" to="">次へ進む</router-link></span>
+      <span class="m-6"><router-link  class="button is-primary" to="fourth">次へ進む</router-link></span>
     </div>
   </div>
 </template>
