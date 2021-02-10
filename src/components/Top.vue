@@ -7,25 +7,25 @@
           <div class="column"><p class="has-text-info">-性別-</p></div>
           <div class="column">
             <label>
-              <input type="radio" v-model="myGender" value="男性"/>男性
+              <input type="radio" v-model="onChangeStateMyGender" value="男性"/>男性
             </label>
             <label>
-              <input type="radio" v-model="myGender" value="女性"/>女性
+              <input type="radio" v-model="onChangeStateMyGender" value="女性"/>女性
             </label>
           </div>
           <div class="column"><p class="has-text-info">-生年月日-</p></div>
-          <div class="select">
-            <select v-model="year">
+          <div class="select ml-2">
+            <select v-model="onChangeStateMyYear">
               <option v-for="myBirthYear in myBirthYears" :key="myBirthYear.year" :value="myBirthYear.label">{{ myBirthYear.label }}</option>
             </select>
           </div>
           <div class="select">
-            <select v-model="month" @change="getDate()">
+            <select v-model="onChangeStateMyMonth" @change="getDate()">
               <option v-for="m in 12" :key="m" :value="m">{{ `${m}月` }}</option>
             </select>
           </div>
           <div class="select mb-4">
-            <select v-model="date">
+            <select v-model="onChangeStateMyDate">
               <option v-for="date in dateMax" :key="date" :value="date">{{ `${date}日` }}</option>
             </select>
            </div>
@@ -39,24 +39,66 @@
 </template>
 <script>
 import { generate } from '@/helpers/definition.js'
-
+import { mapGetters, mapMutations } from 'vuex'
 export default {
   name: 'Top',
   data () {
     return {
-      myGender: null,
-      year: '2000年 (平成12年)',
-      month: 1,
-      date: 1,
       myBirthYears: [],
-      dateMax: ''
+      dateMax: null
+    }
+  },
+  computed: {
+    ...mapGetters([
+      'getStateMyGender',
+      'getStateMyYear',
+      'getStateMyMonth',
+      'getStateMyDate'
+    ]),
+    onChangeStateMyGender: {
+      get () {
+        return this.getStateMyGender
+      },
+      set (value) {
+        this.changeStateMyGender(value)
+      }
+    },
+    onChangeStateMyYear: {
+      get () {
+        return this.getStateMyYear
+      },
+      set (value) {
+        this.changeStateMyYear(value)
+      }
+    },
+    onChangeStateMyMonth: {
+      get () {
+        return this.getStateMyMonth
+      },
+      set (value) {
+        this.changeStateMyMonth(value)
+      }
+    },
+    onChangeStateMyDate: {
+      get () {
+        return this.getStateMyDate
+      },
+      set (value) {
+        this.changeStateMyDate(value)
+      }
     }
   },
   methods: {
+    ...mapMutations([
+      'changeStateMyGender',
+      'changeStateMyYear',
+      'changeStateMyMonth',
+      'changeStateMyDate'
+    ]),
     getDate: function () {
-      if (this.month === 1 || this.month === 3 || this.month === 5 || this.month === 7 || this.month === 8 || this.month === 10 || this.month === 12) {
+      if (this.getStateMyMonth === 1 || this.getStateMyMonth === 3 || this.getStateMyMonth === 5 || this.getStateMyMonth === 7 || this.getStateMyMonth === 8 || this.getStateMyMonth === 10 || this.getStateMyMonth === 12) {
         this.dateMax = 31
-      } else if (this.month === 2) {
+      } else if (this.getStateMyMonth === 2) {
         this.dateMax = 28
       } else {
         this.dateMax = 30
